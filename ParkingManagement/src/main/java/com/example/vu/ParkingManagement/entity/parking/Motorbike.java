@@ -18,4 +18,6 @@ public class Motorbike extends BaseEntityWithUpdater {
     private String licensePlate;
     @Column(name = "employee_id")
     private String employeeId;
+    @Column(name = "color")
+    private String color;
 }
