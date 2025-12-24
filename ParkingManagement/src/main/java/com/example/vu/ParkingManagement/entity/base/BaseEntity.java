@@ -29,6 +29,10 @@ public class BaseEntity {
     @CreatedDate
     private Long createdAt;
 
+    public BaseEntity(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
@@ -46,4 +50,6 @@ public class BaseEntity {
     public void ensureId() {
         this.id = Objects.isNull(this.id) ? UUID.randomUUID().toString() : this.id;
     }
+
+
 }

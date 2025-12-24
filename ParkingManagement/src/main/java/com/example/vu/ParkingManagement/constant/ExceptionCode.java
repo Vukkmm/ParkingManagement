@@ -8,6 +8,6 @@ public class ExceptionCode {
     public static final String USER_NOT_FOUND_CODE = "com.example.vu.ParkingManagement.exception.base.NotFoundException.UserNotFoundException";
     public static final String GENERIC_CODE = "com.example.vu.ParkingManagement.exception.base.GenericException";
 
-    //public static final String CATEGORY_ALREADY_EXIST_EXCEPTION = "com.example.vu.ParkingManagement.exception.book.CategoryAlreadyExistException";
+    public static final String EMPLOYEE_ALREADY_EXIST_EXCEPTION = "com.example.vu.ParkingManagement.exception.Parking.EmployeeAlreadyExistException";
 
 }

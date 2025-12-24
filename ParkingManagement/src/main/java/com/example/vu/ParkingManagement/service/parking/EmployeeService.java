@@ -1,4 +1,4 @@
-package com.example.vu.ParkingManagement.service;
+package com.example.vu.ParkingManagement.service.parking;
 
 import com.example.vu.ParkingManagement.dto.request.EmployeeRequest;
 import com.example.vu.ParkingManagement.dto.response.EmployeeResponse;

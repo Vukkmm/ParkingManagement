@@ -16,4 +16,13 @@ public class EmployeeResponse {
     private Long createAt;
     private String lastUpdateBy;
     private Long lastUpdateAt;
+
+    public EmployeeResponse(String id, String employeeCode, String fullName, Boolean isActive, String createBy, Long createAt) {
+        this.id = id;
+        this.employeeCode = employeeCode;
+        this.fullName = fullName;
+        this.isActive = isActive;
+        this.createBy = createBy;
+        this.createAt = createAt;
+    }
 }

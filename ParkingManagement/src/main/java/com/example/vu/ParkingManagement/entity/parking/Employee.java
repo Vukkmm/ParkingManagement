@@ -20,4 +20,14 @@ public class Employee extends BaseEntityWithUpdater {
     private String fullName;
     @Column(name = "is_active")
     private Boolean isActive;
+
+    public Employee(String createdBy, String employeeCode, String fullName, Boolean isActive) {
+        super(createdBy);
+        this.employeeCode = employeeCode;
+        this.fullName = fullName;
+        this.isActive = isActive;
+    }
 }
+
+
+
