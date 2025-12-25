@@ -11,22 +11,14 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor(staticName = "of")
+@AllArgsConstructor
 @Table(name="employee")
 public class Employee extends BaseEntityWithUpdater {
     @Column(name = "employee_code")
     private String employeeCode;
     @Column(name = "full_name")
     private String fullName;
-    @Column(name = "is_active")
-    private Boolean isActive;
 
-    public Employee(String createdBy, String employeeCode, String fullName, Boolean isActive) {
-        super(createdBy);
-        this.employeeCode = employeeCode;
-        this.fullName = fullName;
-        this.isActive = isActive;
-    }
 }
 
 

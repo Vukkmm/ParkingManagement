@@ -1,14 +1,19 @@
 package com.example.vu.ParkingManagement.dto.response;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeResponse {
-    private String id;
+public class RegisterMotorbikeResponse {
+    private String employeeId;
     private String employeeCode;
     private String fullName;
+    private String motorbikeId;
+    private String licensePlate;
+    private String color;
 }

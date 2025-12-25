@@ -29,10 +29,6 @@ public class BaseEntity {
     @CreatedDate
     private Long createdAt;
 
-    public BaseEntity(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }

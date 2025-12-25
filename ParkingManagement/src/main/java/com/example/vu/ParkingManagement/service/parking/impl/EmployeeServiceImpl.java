@@ -18,20 +18,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeResponse create(EmployeeRequest request) {
         this.checkExistEmployeeCode(request.getEmployeeCode());
-        Employee employee =new Employee(
-                request.getCreateBy(),
+        Employee employee = new Employee(
                 request.getEmployeeCode(),
-                request.getFullName(),
-                request.getIsActive()
+                request.getFullName()
         );
         employeeRepository.save(employee);
         return new EmployeeResponse(
                 employee.getId(),
                 employee.getEmployeeCode(),
-                employee.getFullName(),
-                employee.getIsActive(),
-                employee.getCreatedBy(),
-                employee.getCreatedAt()
+                employee.getFullName()
         );
     }
 
@@ -41,5 +36,4 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
     }
-
 }

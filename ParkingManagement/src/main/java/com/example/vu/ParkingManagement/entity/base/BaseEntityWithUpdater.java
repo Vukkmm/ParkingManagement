@@ -8,8 +8,6 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @MappedSuperclass
 public class BaseEntityWithUpdater extends BaseEntity {
     @LastModifiedBy
@@ -18,8 +16,4 @@ public class BaseEntityWithUpdater extends BaseEntity {
     @LastModifiedDate
     private Long lastUpdatedAt;
 
-
-    public BaseEntityWithUpdater(String createdBy) {
-        super(createdBy);
-    }
 }

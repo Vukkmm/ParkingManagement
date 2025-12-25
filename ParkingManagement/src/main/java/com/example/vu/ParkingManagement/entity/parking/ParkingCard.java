@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor(staticName = "of")
+@AllArgsConstructor
 @Entity
 @Table(name = "parking_card")
 public class ParkingCard extends BaseEntityWithUpdater {
