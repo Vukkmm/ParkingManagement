@@ -16,4 +16,5 @@ public class RegisterMotorbikeResponse {
     private String motorbikeId;
     private String licensePlate;
     private String color;
+    private String cardId;
 }

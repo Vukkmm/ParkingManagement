@@ -8,5 +8,8 @@ public class MessageCodeConstant {
     public static final String UPDATE_CATEGORY="com.example.LibraryManagement.controller.category.update";
     public static final String SOFT_DELETE_CATEGORY="com.example.LibraryManagement.controller.category.softDelete";
 
+    public static final String CREATE_EMPLOYEE_AND_MOTORBIKE ="com.example.vu.ParkingManagement.controller.RegisterMotorbike.create";
+
+
 
 }

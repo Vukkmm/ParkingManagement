@@ -14,4 +14,5 @@ public class RegisterMotorbikeRequest {
     private String fullName;
     private String licensePlate;
     private String color;
+    private String cardId;
 }

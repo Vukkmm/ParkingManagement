@@ -10,14 +10,16 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor(staticName = "of")
+@AllArgsConstructor
 @Entity
 @Table(name = "motorbike")
 public class Motorbike extends BaseEntityWithUpdater {
     @Column(name = "license_plate")
     private String licensePlate;
-    @Column(name = "employee_id")
-    private String employeeId;
     @Column(name = "color")
     private String color;
+    @Column(name = "employee_id")
+    private String employeeId;
+    @Column(name = "card_id")
+    private String cardId;
 }
