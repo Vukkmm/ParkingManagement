@@ -1,5 +1,6 @@
 package com.example.vu.ParkingManagement.controller.parking;
 
+import com.example.vu.ParkingManagement.dto.base.PageResponse;
 import com.example.vu.ParkingManagement.dto.base.ResponseGeneral;
 import com.example.vu.ParkingManagement.dto.request.ParkingCardRequest;
 import com.example.vu.ParkingManagement.dto.request.RegisterMotorbikeRequest;
@@ -10,10 +11,8 @@ import com.example.vu.ParkingManagement.service.message.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import static com.example.vu.ParkingManagement.constant.CommonConstants.DEFAULT_LANGUAGE;
-import static com.example.vu.ParkingManagement.constant.CommonConstants.LANGUAGE;
-import static com.example.vu.ParkingManagement.constant.MessageCodeConstant.CREATE_EMPLOYEE_AND_MOTORBIKE;
-import static com.example.vu.ParkingManagement.constant.MessageCodeConstant.CREATE_PARKING_CARD;
+import static com.example.vu.ParkingManagement.constant.CommonConstants.*;
+import static com.example.vu.ParkingManagement.constant.MessageCodeConstant.*;
 
 @RestController
 @RequestMapping("api/v1/register-motorbikes")
@@ -30,6 +29,19 @@ public class RegisterMotorbikeController {
         return ResponseGeneral.ofCreated(
                 messageService.getMessage(CREATE_EMPLOYEE_AND_MOTORBIKE, language),
                 registerMotorbikeService.create(request)
+        );
+    }
+
+    @PostMapping("/getAllAndSearch")
+    public  ResponseGeneral<PageResponse<RegisterMotorbikeResponse>> getAllAndSearch(
+            @RequestBody RegisterMotorbikeRequest request,
+            @RequestParam(name = SIZE, defaultValue = "10") int size,
+            @RequestParam(name = PAGE, defaultValue = "0") int page,
+            @RequestParam(name = ALL, defaultValue = "false", required = false) boolean isAll,
+            @RequestHeader(name = LANGUAGE, defaultValue = DEFAULT_LANGUAGE) String language
+    ) {
+        return ResponseGeneral.ofSuccess(messageService.getMessage(GET_ALL_AND_SEARCH_EMPLOYEE_AND_MOTORBIKE, language),
+                registerMotorbikeService.getAllAndSearch(request, size, page, isAll)
         );
     }
 

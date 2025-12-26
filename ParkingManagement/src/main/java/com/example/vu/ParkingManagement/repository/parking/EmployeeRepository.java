@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmployeeRepository extends BaseRepository<Employee> {
+
+    Employee findByEmployeeCode(String employeeCode);
+
     @Query("""
         SELECT CASE WHEN COUNT(r) > 0 
         THEN true ELSE false END FROM Employee r

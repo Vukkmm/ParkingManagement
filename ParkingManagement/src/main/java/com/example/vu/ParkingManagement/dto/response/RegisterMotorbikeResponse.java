@@ -10,11 +10,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegisterMotorbikeResponse {
-    private String employeeId;
-    private String employeeCode;
-    private String fullName;
     private String motorbikeId;
     private String licensePlate;
     private String color;
     private String cardId;
+    private String employeeId;
+    private String employeeCode;
+    private String fullName;
 }
