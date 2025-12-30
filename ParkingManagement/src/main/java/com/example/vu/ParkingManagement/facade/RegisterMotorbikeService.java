@@ -9,5 +9,6 @@ public interface RegisterMotorbikeService {
 
     PageResponse<RegisterMotorbikeResponse> getAllAndSearch(RegisterMotorbikeRequest request , int size, int page, boolean isAll);
 
-    RegisterMotorbikeResponse update(String id, RegisterMotorbikeRequest request);
+    RegisterMotorbikeResponse update(String employeeId, String motorId, RegisterMotorbikeRequest request);
+
 }

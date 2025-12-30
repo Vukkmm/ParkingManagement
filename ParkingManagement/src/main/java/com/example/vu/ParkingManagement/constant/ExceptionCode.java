@@ -9,10 +9,14 @@ public class ExceptionCode {
     public static final String GENERIC_CODE = "com.example.vu.ParkingManagement.exception.base.GenericException";
 
     public static final String EMPLOYEE_ALREADY_EXIST_EXCEPTION = "com.example.vu.ParkingManagement.exception.Parking.EmployeeAlreadyExistException";
+    public static final String EMPLOYEE_NOT_FOUND_EXCEPTION = "com.example.vu.ParkingManagement.exception.Parking.EmployeeNotFoundException";
+
     public static final String PARKING_CARD_ALREADY_EXIST_EXCEPTION = "com.example.vu.ParkingManagement.exception.Parking.ParkingCarAlreadyExistException";
     public static final String PARKING_CARD_NOT_FOUND_EXCEPTION = "com.example.vu.ParkingManagement.exception.Parking.ParkingCarNotFoundException";
 
     public static final String MOTORBIKE_CARD_ALREADY_EXIST_EXCEPTION = "com.example.vu.ParkingManagement.exception.Parking.MotorAlreadyExistException";
+    public static final String MOTORBIKE_NOT_FOUND_EXCEPTION = "com.example.vu.ParkingManagement.exception.Parking.MotorNotFoundException";
+
 
 
 

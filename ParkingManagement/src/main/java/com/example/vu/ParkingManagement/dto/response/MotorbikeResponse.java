@@ -5,15 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterMotorbikeResponse {
-    private String employeeId;
-    private String employeeCode;
-    private String fullName;
-    private List<MotorbikeResponse> motorbikeResponseList;
+public class MotorbikeResponse {
+    private String id;
+    private String licensePlate;
+    private String color;
+    private String cardId;
 }

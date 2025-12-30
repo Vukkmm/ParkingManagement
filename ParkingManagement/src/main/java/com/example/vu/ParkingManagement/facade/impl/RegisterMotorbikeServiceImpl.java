@@ -2,14 +2,14 @@ package com.example.vu.ParkingManagement.facade.impl;
 
 import com.example.vu.ParkingManagement.constant.EnumStatus;
 import com.example.vu.ParkingManagement.dto.base.PageResponse;
+import com.example.vu.ParkingManagement.dto.request.MotorbikeRequest;
 import com.example.vu.ParkingManagement.dto.request.RegisterMotorbikeRequest;
+import com.example.vu.ParkingManagement.dto.response.MotorbikeResponse;
 import com.example.vu.ParkingManagement.dto.response.RegisterMotorbikeResponse;
 import com.example.vu.ParkingManagement.entity.parking.Employee;
 import com.example.vu.ParkingManagement.entity.parking.Motorbike;
 import com.example.vu.ParkingManagement.entity.parking.ParkingCard;
-import com.example.vu.ParkingManagement.exception.parking.MotorbikeAlreadyExistException;
-import com.example.vu.ParkingManagement.exception.parking.ParkingCarAlreadyExistException;
-import com.example.vu.ParkingManagement.exception.parking.ParkingCarNotFoundException;
+import com.example.vu.ParkingManagement.exception.parking.*;
 import com.example.vu.ParkingManagement.facade.RegisterMotorbikeService;
 import com.example.vu.ParkingManagement.repository.parking.EmployeeRepository;
 import com.example.vu.ParkingManagement.repository.parking.MotorbikeRepository;
@@ -19,6 +19,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +33,11 @@ public class RegisterMotorbikeServiceImpl implements RegisterMotorbikeService {
     @Transactional
     @Override
     public RegisterMotorbikeResponse create(RegisterMotorbikeRequest request) {
-        this.checkLicensePlateExist(request.getLicensePlate());
+        List<MotorbikeResponse> listMotorbike = new ArrayList<>();
+
+        for (MotorbikeRequest r : request.getMotorbikeList()) {
+            this.checkLicensePlateExist(r.getLicensePlate());
+        }
         this.checkCardIdExist(request.getCardId());
         Employee employee = employeeRepository.findByEmployeeCode(request.getEmployeeCode());
         if (employee == null) {
@@ -38,21 +45,28 @@ public class RegisterMotorbikeServiceImpl implements RegisterMotorbikeService {
             employee.setFullName(request.getFullName());
         }
         employeeRepository.save(employee);
-        Motorbike motorbike = new Motorbike(
-                request.getLicensePlate(),
-                request.getColor(),
-                employee.getId(),
-                request.getCardId()
-        );
-        motorbikeRepository.save(motorbike);
+
+        for (MotorbikeRequest r : request.getMotorbikeList()) {
+            Motorbike motorbike = new Motorbike(
+                    r.getLicensePlate(),
+                    r.getColor(),
+                    employee.getId(),
+                    r.getCardId()
+            );
+            MotorbikeResponse response = new MotorbikeResponse(
+                    motorbike.getId(),
+                    motorbike.getLicensePlate(),
+                    motorbike.getColor(),
+                    motorbike.getCardId()
+            );
+            listMotorbike.add(response);
+            motorbikeRepository.save(motorbike);
+        }
         return new RegisterMotorbikeResponse(
-                motorbike.getId(),
-                motorbike.getLicensePlate(),
-                motorbike.getColor(),
-                motorbike.getCardId(),
                 employee.getId(),
                 employee.getEmployeeCode(),
-                employee.getFullName()
+                employee.getFullName(),
+                listMotorbike
                 );
     }
 
@@ -63,8 +77,12 @@ public class RegisterMotorbikeServiceImpl implements RegisterMotorbikeService {
         return PageResponse.of(responses.getContent(), responses.getNumberOfElements());
     }
 
+    @Transactional
     @Override
-    public RegisterMotorbikeResponse update(String id, RegisterMotorbikeRequest request) {
+    public RegisterMotorbikeResponse update(String employeeId, String motorId, RegisterMotorbikeRequest request) {
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(EmployeeNotFoundException::new);
+        Motorbike motorbike = motorbikeRepository.findById(motorId).orElseThrow(MotorbikeNotFoundException::new);
+
         return null;
     }
 
@@ -83,5 +101,9 @@ public class RegisterMotorbikeServiceImpl implements RegisterMotorbikeService {
         parkingCard.setStatus(EnumStatus.USED.getStatus());
         parkingCardRepository.save(parkingCard);
     }
+
+//    private Employee findEmployeeById(String id) {
+//        return employeeRepository.findById(id).orElseThrow(EmployeeNotFoundException::new);
+//    }
 
 }
