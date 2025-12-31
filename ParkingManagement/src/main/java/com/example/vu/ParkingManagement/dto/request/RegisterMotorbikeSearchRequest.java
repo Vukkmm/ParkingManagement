@@ -5,13 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterMotorbikeRequest {
+public class RegisterMotorbikeSearchRequest {
+    private String licensePlate;
+    private String color;
+    private String cardId;
+    private String employeeCode;
     private String fullName;
-    private List<MotorbikeRequest> motorbikeList;
+
 }

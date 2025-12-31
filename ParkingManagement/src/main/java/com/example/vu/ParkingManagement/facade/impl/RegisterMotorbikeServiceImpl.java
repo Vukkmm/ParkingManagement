@@ -4,8 +4,10 @@ import com.example.vu.ParkingManagement.constant.EnumStatus;
 import com.example.vu.ParkingManagement.dto.base.PageResponse;
 import com.example.vu.ParkingManagement.dto.request.MotorbikeRequest;
 import com.example.vu.ParkingManagement.dto.request.RegisterMotorbikeRequest;
+import com.example.vu.ParkingManagement.dto.request.RegisterMotorbikeSearchRequest;
 import com.example.vu.ParkingManagement.dto.response.MotorbikeResponse;
 import com.example.vu.ParkingManagement.dto.response.RegisterMotorbikeResponse;
+import com.example.vu.ParkingManagement.dto.response.RegisterMotorbikeSearchResponse;
 import com.example.vu.ParkingManagement.entity.parking.Employee;
 import com.example.vu.ParkingManagement.entity.parking.Motorbike;
 import com.example.vu.ParkingManagement.entity.parking.ParkingCard;
@@ -35,15 +37,21 @@ public class RegisterMotorbikeServiceImpl implements RegisterMotorbikeService {
     public RegisterMotorbikeResponse create(RegisterMotorbikeRequest request) {
         List<MotorbikeResponse> listMotorbike = new ArrayList<>();
 
+        String employeeCode = generateEmployeeCode();
+
+        if (employeeRepository.findByEmployeeCode(employeeCode) != null) {
+            throw new EmployeeAlreadyExistException();
+        }
+
+        Employee employee = new Employee();
+        employee.setEmployeeCode(employeeCode);
+        employee.setFullName(request.getFullName());
+
         for (MotorbikeRequest r : request.getMotorbikeList()) {
             this.checkLicensePlateExist(r.getLicensePlate());
+            this.checkCardIdExist(r.getCardId());
         }
-        this.checkCardIdExist(request.getCardId());
-        Employee employee = employeeRepository.findByEmployeeCode(request.getEmployeeCode());
-        if (employee == null) {
-            employee.setEmployeeCode(request.getEmployeeCode());
-            employee.setFullName(request.getFullName());
-        }
+
         employeeRepository.save(employee);
 
         for (MotorbikeRequest r : request.getMotorbikeList()) {
@@ -53,6 +61,7 @@ public class RegisterMotorbikeServiceImpl implements RegisterMotorbikeService {
                     employee.getId(),
                     r.getCardId()
             );
+            motorbikeRepository.save(motorbike);
             MotorbikeResponse response = new MotorbikeResponse(
                     motorbike.getId(),
                     motorbike.getLicensePlate(),
@@ -60,7 +69,6 @@ public class RegisterMotorbikeServiceImpl implements RegisterMotorbikeService {
                     motorbike.getCardId()
             );
             listMotorbike.add(response);
-            motorbikeRepository.save(motorbike);
         }
         return new RegisterMotorbikeResponse(
                 employee.getId(),
@@ -71,8 +79,8 @@ public class RegisterMotorbikeServiceImpl implements RegisterMotorbikeService {
     }
 
     @Override
-    public PageResponse<RegisterMotorbikeResponse> getAllAndSearch(RegisterMotorbikeRequest request, int size, int page, boolean isAll) {
-        Page<RegisterMotorbikeResponse> responses = isAll ? motorbikeRepository.findAllRegisterMotorbike(PageRequest.of(page, size)) :
+    public PageResponse<RegisterMotorbikeSearchResponse> getAllAndSearch(RegisterMotorbikeSearchRequest request, int size, int page, boolean isAll) {
+        Page<RegisterMotorbikeSearchResponse> responses = isAll ? motorbikeRepository.findAllRegisterMotorbike(PageRequest.of(page, size)) :
                 motorbikeRepository.search(PageRequest.of(page, size), request);
         return PageResponse.of(responses.getContent(), responses.getNumberOfElements());
     }
@@ -83,7 +91,21 @@ public class RegisterMotorbikeServiceImpl implements RegisterMotorbikeService {
         Employee employee = employeeRepository.findById(employeeId).orElseThrow(EmployeeNotFoundException::new);
         Motorbike motorbike = motorbikeRepository.findById(motorId).orElseThrow(MotorbikeNotFoundException::new);
 
+
+
         return null;
+    }
+
+    private String generateEmployeeCode() {
+        List<String> codes = employeeRepository.findLatestEmployeeCode(PageRequest.of(0, 1));
+
+        if (codes.isEmpty()) {
+            return "EMP0001";
+        }
+
+        String latest = codes.get(0);
+        int num = Integer.parseInt(latest.replace("EMP",""));
+        return String.format("EMP%04d", num + 1);
     }
 
     private void checkLicensePlateExist(String licensePlate) {
@@ -101,9 +123,5 @@ public class RegisterMotorbikeServiceImpl implements RegisterMotorbikeService {
         parkingCard.setStatus(EnumStatus.USED.getStatus());
         parkingCardRepository.save(parkingCard);
     }
-
-//    private Employee findEmployeeById(String id) {
-//        return employeeRepository.findById(id).orElseThrow(EmployeeNotFoundException::new);
-//    }
 
 }

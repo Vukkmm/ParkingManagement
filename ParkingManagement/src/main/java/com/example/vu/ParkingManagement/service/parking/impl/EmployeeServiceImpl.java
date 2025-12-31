@@ -15,7 +15,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
 
     @Override
-    public EmployeeResponse create(EmployeeRequest request) {
+    public EmployeeResponse update(String id, EmployeeRequest request) {
         this.checkExistEmployeeCode(request.getEmployeeCode());
         Employee employee = new Employee(
                 request.getEmployeeCode(),

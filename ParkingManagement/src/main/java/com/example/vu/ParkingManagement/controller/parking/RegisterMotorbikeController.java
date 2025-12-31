@@ -4,8 +4,10 @@ import com.example.vu.ParkingManagement.dto.base.PageResponse;
 import com.example.vu.ParkingManagement.dto.base.ResponseGeneral;
 import com.example.vu.ParkingManagement.dto.request.ParkingCardRequest;
 import com.example.vu.ParkingManagement.dto.request.RegisterMotorbikeRequest;
+import com.example.vu.ParkingManagement.dto.request.RegisterMotorbikeSearchRequest;
 import com.example.vu.ParkingManagement.dto.response.ParkingCarResponse;
 import com.example.vu.ParkingManagement.dto.response.RegisterMotorbikeResponse;
+import com.example.vu.ParkingManagement.dto.response.RegisterMotorbikeSearchResponse;
 import com.example.vu.ParkingManagement.facade.RegisterMotorbikeService;
 import com.example.vu.ParkingManagement.service.message.MessageService;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +35,8 @@ public class RegisterMotorbikeController {
     }
 
     @PostMapping("/getAllAndSearch")
-    public  ResponseGeneral<PageResponse<RegisterMotorbikeResponse>> getAllAndSearch(
-            @RequestBody RegisterMotorbikeRequest request,
+    public  ResponseGeneral<PageResponse<RegisterMotorbikeSearchResponse>> getAllAndSearch(
+            @RequestBody RegisterMotorbikeSearchRequest request,
             @RequestParam(name = SIZE, defaultValue = "10") int size,
             @RequestParam(name = PAGE, defaultValue = "0") int page,
             @RequestParam(name = ALL, defaultValue = "false", required = false) boolean isAll,

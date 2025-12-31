@@ -4,5 +4,5 @@ import com.example.vu.ParkingManagement.dto.request.EmployeeRequest;
 import com.example.vu.ParkingManagement.dto.response.EmployeeResponse;
 
 public interface EmployeeService {
-    EmployeeResponse create(EmployeeRequest request);
+    EmployeeResponse update(String id, EmployeeRequest request);
 }
