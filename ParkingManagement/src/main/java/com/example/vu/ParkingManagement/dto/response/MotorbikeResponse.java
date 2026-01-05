@@ -14,4 +14,12 @@ public class MotorbikeResponse {
     private String licensePlate;
     private String color;
     private String cardId;
+    private String employeeId;
+
+    public MotorbikeResponse(String id, String licensePlate, String color, String cardId) {
+        this.id = id;
+        this.licensePlate = licensePlate;
+        this.color = color;
+        this.cardId = cardId;
+    }
 }

@@ -17,8 +17,9 @@ public interface MotorbikeRepository extends BaseRepository<Motorbike> {
         SELECT CASE WHEN COUNT(r) > 0 
         THEN true ELSE false END FROM Motorbike r
         WHERE r.licensePlate = :licensePlate
+                AND (:id IS NULL OR r.id <> :id)
         """)
-    boolean checkLicensePlateExist(String licensePlate);
+    boolean checkLicensePlateExist(String licensePlate, String employeeId);
 
 
     @Query("""

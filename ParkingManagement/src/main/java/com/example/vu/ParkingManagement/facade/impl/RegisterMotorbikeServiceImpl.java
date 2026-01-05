@@ -109,7 +109,7 @@ public class RegisterMotorbikeServiceImpl implements RegisterMotorbikeService {
     }
 
     private void checkLicensePlateExist(String licensePlate) {
-        if(motorbikeRepository.checkLicensePlateExist(licensePlate)){
+        if(motorbikeRepository.checkLicensePlateExist(licensePlate, null)){
             throw new MotorbikeAlreadyExistException();
         }
     }

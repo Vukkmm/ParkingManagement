@@ -13,4 +13,11 @@ public class MotorbikeRequest {
     private String licensePlate;
     private String color;
     private String cardId;
+    private String employeeId;
+
+    public MotorbikeRequest(String licensePlate, String color, String cardId) {
+        this.licensePlate = licensePlate;
+        this.color = color;
+        this.cardId = cardId;
+    }
 }
