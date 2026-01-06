@@ -87,13 +87,14 @@ public class RegisterMotorbikeServiceImpl implements RegisterMotorbikeService {
 
     @Transactional
     @Override
-    public RegisterMotorbikeResponse update(String employeeId, String motorId, RegisterMotorbikeRequest request) {
-        Employee employee = employeeRepository.findById(employeeId).orElseThrow(EmployeeNotFoundException::new);
-        Motorbike motorbike = motorbikeRepository.findById(motorId).orElseThrow(MotorbikeNotFoundException::new);
-
-
-
-        return null;
+    public void deleteEmployee(String id) {
+        employeeRepository.findById(id).orElseThrow(EmployeeNotFoundException::new);
+        employeeRepository.deleteById(id);
+        List<String > lstCardId = motorbikeRepository.findCardIdsByEmployeeId(id);
+        for(String i : lstCardId) {
+            updateStatusCardId(i);
+        }
+        motorbikeRepository.deleteByEmployeeId(id);
     }
 
     private String generateEmployeeCode() {
@@ -116,11 +117,20 @@ public class RegisterMotorbikeServiceImpl implements RegisterMotorbikeService {
 
     private void checkCardIdExist(String cardId) {
         ParkingCard parkingCard = parkingCardRepository.findById(cardId)
-                .orElseThrow(() -> new ParkingCarNotFoundException());
+                .orElseThrow(ParkingCarNotFoundException::new);
         if (!EnumStatus.AVAILABLE.getStatus().equals(parkingCard.getStatus())) {
             throw new ParkingCarAlreadyExistException();
         }
         parkingCard.setStatus(EnumStatus.USED.getStatus());
+        parkingCardRepository.save(parkingCard);
+    }
+
+    private void updateStatusCardId(String cardId) {
+        ParkingCard parkingCard = parkingCardRepository.findById(cardId)
+                .orElseThrow((ParkingCarNotFoundException::new));
+        if (EnumStatus.USED.getStatus().equals(parkingCard.getStatus())) {
+            parkingCard.setStatus(EnumStatus.AVAILABLE.getStatus());
+        }
         parkingCardRepository.save(parkingCard);
     }
 

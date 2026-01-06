@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.example.vu.ParkingManagement.constant.CommonConstants.DEFAULT_LANGUAGE;
 import static com.example.vu.ParkingManagement.constant.CommonConstants.LANGUAGE;
-import static com.example.vu.ParkingManagement.constant.MessageCodeConstant.CREATE_MOTORBIKE;
-import static com.example.vu.ParkingManagement.constant.MessageCodeConstant.UPDATE_MOTORBIKE;
+import static com.example.vu.ParkingManagement.constant.MessageCodeConstant.*;
 
 @RestController
 @RequestMapping("api/v1/motorbikes")
@@ -43,5 +42,14 @@ public class MotorbikeController {
                 messageService.getMessage(UPDATE_MOTORBIKE, language),
                 motorbikeService.update(id, request)
         );
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseGeneral<Void> delete(
+            @PathVariable String id,
+            @RequestHeader(name = LANGUAGE, defaultValue = DEFAULT_LANGUAGE) String language
+    ) {
+        motorbikeService.delete(id);
+        return ResponseGeneral.ofSuccess(messageService.getMessage(DELETE_MOTORBIKE, language));
     }
 }

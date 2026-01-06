@@ -7,4 +7,6 @@ public interface MotorbikeService {
     MotorbikeResponse create(MotorbikeRequest request);
 
     MotorbikeResponse update(String id, MotorbikeRequest request);
+
+    void delete(String id);
 }

@@ -48,6 +48,23 @@ public class MotorbikeServiceImpl implements MotorbikeService {
         return convertResponse(motorbike);
     }
 
+    @Transactional
+    @Override
+    public void delete(String id) {
+        Motorbike motorbike = motorbikeRepository.findById(id)
+                .orElseThrow(MotorbikeNotFoundException::new);
+        updateStatusCardId(motorbike.getCardId());
+    }
+
+    private void updateStatusCardId(String cardId) {
+        ParkingCard parkingCard = parkingCardRepository.findById(cardId)
+                .orElseThrow((ParkingCarNotFoundException::new));
+        if (EnumStatus.USED.getStatus().equals(parkingCard.getStatus())) {
+            parkingCard.setStatus(EnumStatus.AVAILABLE.getStatus());
+        }
+        parkingCardRepository.save(parkingCard);
+    }
+
     private void checkLicensePlateExist(String licensePlate, String employeeId) {
         if(motorbikeRepository.checkLicensePlateExist(licensePlate, employeeId)){
             throw new MotorbikeAlreadyExistException();

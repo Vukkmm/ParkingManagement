@@ -2,9 +2,7 @@ package com.example.vu.ParkingManagement.controller.parking;
 
 import com.example.vu.ParkingManagement.dto.base.ResponseGeneral;
 import com.example.vu.ParkingManagement.dto.request.EmployeeRequest;
-import com.example.vu.ParkingManagement.dto.request.ParkingCardRequest;
 import com.example.vu.ParkingManagement.dto.response.EmployeeResponse;
-import com.example.vu.ParkingManagement.dto.response.ParkingCarResponse;
 import com.example.vu.ParkingManagement.service.message.MessageService;
 import com.example.vu.ParkingManagement.service.parking.EmployeeService;
 import lombok.RequiredArgsConstructor;

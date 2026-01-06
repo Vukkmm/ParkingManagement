@@ -47,5 +47,15 @@ public class RegisterMotorbikeController {
         );
     }
 
+    @DeleteMapping("{id}")
+    public ResponseGeneral<Void> delete(
+            @PathVariable String id,
+            @RequestHeader(name = LANGUAGE, defaultValue = DEFAULT_LANGUAGE) String language
+    ) {
+        registerMotorbikeService.deleteEmployee(id);
+        return ResponseGeneral.ofSuccess(messageService.getMessage(DELETE_EMPLOYEE_AND_MOTORBIKE, language));
+    }
+
+
 
 }

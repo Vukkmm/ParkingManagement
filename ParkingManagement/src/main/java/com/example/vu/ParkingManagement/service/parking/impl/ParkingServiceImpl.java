@@ -32,6 +32,16 @@ public class ParkingServiceImpl implements ParkingCardService {
         );
     }
 
+    @Override
+    public ParkingCarResponse update(String id, ParkingCardRequest request) {
+        return null;
+    }
+
+    @Override
+    public void delete(String id) {
+
+    }
+
     private void checkExistParkingCardCode(String code) {
         if(repository.checkParkingCardExist(code)){
             throw new ParkingCarAlreadyExistException();

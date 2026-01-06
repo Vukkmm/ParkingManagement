@@ -6,20 +6,25 @@ import com.example.vu.ParkingManagement.dto.response.RegisterMotorbikeResponse;
 import com.example.vu.ParkingManagement.dto.response.RegisterMotorbikeSearchResponse;
 import com.example.vu.ParkingManagement.entity.parking.Motorbike;
 import com.example.vu.ParkingManagement.repository.BaseRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface MotorbikeRepository extends BaseRepository<Motorbike> {
+
     @Query("""
         SELECT CASE WHEN COUNT(r) > 0 
         THEN true ELSE false END FROM Motorbike r
         WHERE r.licensePlate = :licensePlate
                 AND (:id IS NULL OR r.id <> :id)
         """)
-    boolean checkLicensePlateExist(String licensePlate, String employeeId);
+    boolean checkLicensePlateExist(String licensePlate, String id);
 
 
     @Query("""
@@ -60,5 +65,23 @@ public interface MotorbikeRepository extends BaseRepository<Motorbike> {
             Pageable pageable,
             RegisterMotorbikeSearchRequest req
     );
+
+
+
+    @Modifying
+    @Transactional
+    @Query("""
+    DELETE FROM Motorbike m
+    WHERE m.employeeId = :employeeId
+""")
+    void deleteByEmployeeId( String employeeId);
+
+    @Query("""
+    SELECT m.cardId
+    FROM Motorbike m
+    WHERE m.employeeId = :employeeId
+""")
+    List<String> findCardIdsByEmployeeId(String employeeId);
+
 
 }
