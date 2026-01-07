@@ -13,9 +13,11 @@ public class ExceptionCode {
 
     public static final String PARKING_CARD_ALREADY_EXIST_EXCEPTION = "com.example.vu.ParkingManagement.exception.Parking.ParkingCarAlreadyExistException";
     public static final String PARKING_CARD_NOT_FOUND_EXCEPTION = "com.example.vu.ParkingManagement.exception.Parking.ParkingCarNotFoundException";
+    public static final String PARKING_CARD_BAD_REQUEST_STATUS_EXCEPTION = "com.example.vu.ParkingManagement.exception.Parking.ParkingCardBadRequestException";
 
     public static final String MOTORBIKE_CARD_ALREADY_EXIST_EXCEPTION = "com.example.vu.ParkingManagement.exception.Parking.MotorAlreadyExistException";
     public static final String MOTORBIKE_NOT_FOUND_EXCEPTION = "com.example.vu.ParkingManagement.exception.Parking.MotorNotFoundException";
+
 
 
 

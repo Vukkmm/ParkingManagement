@@ -45,6 +45,13 @@ public class MotorbikeServiceImpl implements MotorbikeService {
         Motorbike motorbike = motorbikeRepository.findById(id).orElseThrow(MotorbikeNotFoundException::new);
         motorbike.setLicensePlate(request.getLicensePlate());
         motorbike.setColor(request.getColor());
+
+        if(request.getCardId() != null && !request.getCardId().equals(motorbike.getCardId())) {
+            updateStatusCardIdLost(motorbike.getCardId());
+            checkCardIdExist(request.getCardId());
+            motorbike.setCardId(request.getCardId());
+        }
+        motorbikeRepository.save(motorbike);
         return convertResponse(motorbike);
     }
 
@@ -53,7 +60,7 @@ public class MotorbikeServiceImpl implements MotorbikeService {
     public void delete(String id) {
         Motorbike motorbike = motorbikeRepository.findById(id)
                 .orElseThrow(MotorbikeNotFoundException::new);
-        updateStatusCardId(motorbike.getCardId());
+            updateStatusCardId(motorbike.getCardId());
     }
 
     private void updateStatusCardId(String cardId) {
@@ -61,6 +68,15 @@ public class MotorbikeServiceImpl implements MotorbikeService {
                 .orElseThrow((ParkingCarNotFoundException::new));
         if (EnumStatus.USED.getStatus().equals(parkingCard.getStatus())) {
             parkingCard.setStatus(EnumStatus.AVAILABLE.getStatus());
+        }
+        parkingCardRepository.save(parkingCard);
+    }
+
+    private void updateStatusCardIdLost(String cardId) {
+        ParkingCard parkingCard = parkingCardRepository.findById(cardId)
+                .orElseThrow((ParkingCarNotFoundException::new));
+        if (EnumStatus.USED.getStatus().equals(parkingCard.getStatus())) {
+            parkingCard.setStatus(EnumStatus.LOST.getStatus());
         }
         parkingCardRepository.save(parkingCard);
     }

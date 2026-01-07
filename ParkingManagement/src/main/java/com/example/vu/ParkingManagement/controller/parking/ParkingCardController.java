@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.example.vu.ParkingManagement.constant.CommonConstants.DEFAULT_LANGUAGE;
 import static com.example.vu.ParkingManagement.constant.CommonConstants.LANGUAGE;
-import static com.example.vu.ParkingManagement.constant.MessageCodeConstant.CREATE_PARKING_CARD;
+import static com.example.vu.ParkingManagement.constant.MessageCodeConstant.*;
 
 @RestController
 @RequestMapping("api/v1/parking-cards")
@@ -28,5 +28,14 @@ public class ParkingCardController {
                 messageService.getMessage(CREATE_PARKING_CARD, language),
                 parkingCardService.create(request)
         );
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseGeneral<Void> delete(
+            @PathVariable String id,
+            @RequestHeader(name = LANGUAGE, defaultValue = DEFAULT_LANGUAGE) String language
+    ) {
+        parkingCardService.delete(id);
+        return ResponseGeneral.ofSuccess(messageService.getMessage(DELETE_PARKING_CARD, language));
     }
 }

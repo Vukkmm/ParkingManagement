@@ -5,6 +5,8 @@ import com.example.vu.ParkingManagement.dto.request.ParkingCardRequest;
 import com.example.vu.ParkingManagement.dto.response.ParkingCarResponse;
 import com.example.vu.ParkingManagement.entity.parking.ParkingCard;
 import com.example.vu.ParkingManagement.exception.parking.ParkingCarAlreadyExistException;
+import com.example.vu.ParkingManagement.exception.parking.ParkingCarNotFoundException;
+import com.example.vu.ParkingManagement.exception.parking.ParkingCardBadRequestStatusException;
 import com.example.vu.ParkingManagement.repository.parking.ParkingCardRepository;
 import com.example.vu.ParkingManagement.service.parking.ParkingCardService;
 import jakarta.transaction.Transactional;
@@ -34,12 +36,18 @@ public class ParkingServiceImpl implements ParkingCardService {
 
     @Override
     public ParkingCarResponse update(String id, ParkingCardRequest request) {
+
         return null;
     }
 
+    @Transactional
     @Override
     public void delete(String id) {
-
+        ParkingCard parkingCard = repository.findById(id).orElseThrow(ParkingCarNotFoundException::new);
+        if (parkingCard.getStatus().equals(EnumStatus.USED.getStatus()) ){
+            throw  new ParkingCardBadRequestStatusException();
+        }
+        repository.deleteById(id);
     }
 
     private void checkExistParkingCardCode(String code) {
