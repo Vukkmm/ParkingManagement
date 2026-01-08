@@ -1,6 +1,7 @@
 package com.example.vu.ParkingManagement.service.parking.impl;
 
 import com.example.vu.ParkingManagement.constant.EnumStatus;
+import com.example.vu.ParkingManagement.dto.base.PageResponse;
 import com.example.vu.ParkingManagement.dto.request.ParkingCardRequest;
 import com.example.vu.ParkingManagement.dto.response.ParkingCarResponse;
 import com.example.vu.ParkingManagement.entity.parking.ParkingCard;
@@ -11,6 +12,9 @@ import com.example.vu.ParkingManagement.repository.parking.ParkingCardRepository
 import com.example.vu.ParkingManagement.service.parking.ParkingCardService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -48,6 +52,13 @@ public class ParkingServiceImpl implements ParkingCardService {
             throw  new ParkingCardBadRequestStatusException();
         }
         repository.deleteById(id);
+    }
+
+    @Override
+    public PageResponse<ParkingCarResponse> getAllAndSearch(ParkingCardRequest request, int size, int page, boolean isAll, Sort sort) {
+        Page<ParkingCarResponse> responses  = isAll ? null :
+                repository.search(PageRequest.of(page, size, sort), request);
+        return PageResponse.of(responses.getContent(), responses.getNumberOfElements());
     }
 
     private void checkExistParkingCardCode(String code) {

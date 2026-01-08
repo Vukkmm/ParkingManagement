@@ -11,6 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ParkingCarResponse {
     private String id;
-    private String employeeCode;
-    private String fullName;
+    private String cardCode;
+    private String status;
 }

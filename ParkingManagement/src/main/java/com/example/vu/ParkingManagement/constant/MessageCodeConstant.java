@@ -12,6 +12,8 @@ public class MessageCodeConstant {
     public static final String DELETE_EMPLOYEE_AND_MOTORBIKE ="com.example.vu.ParkingManagement.controller.RegisterMotorbike.deleteEmployee";
     public static final String DELETE_MOTORBIKE ="com.example.vu.ParkingManagement.controller.Motorbike.deleteEmployee";
     public static final String DELETE_PARKING_CARD ="com.example.vu.ParkingManagement.controller.ParkingCardController.delete";
+    public static final String GET_ALL_AND_SEARCH_PARKING_CARD ="com.example.vu.ParkingManagement.controller.ParkingCard.getAllAndSearch";
+
 
 
 
