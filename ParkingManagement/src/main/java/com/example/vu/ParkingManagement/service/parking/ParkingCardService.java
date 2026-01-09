@@ -13,5 +13,5 @@ public interface ParkingCardService
 
     void delete(String id);
 
-    PageResponse<ParkingCarResponse> getAllAndSearch(ParkingCardRequest request, int size, int page, boolean isAll, Sort sort);
+    PageResponse<ParkingCarResponse> getAllAndSearch(ParkingCardRequest request, int size, int page, boolean isAll);
 }

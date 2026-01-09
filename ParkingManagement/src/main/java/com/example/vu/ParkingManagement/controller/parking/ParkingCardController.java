@@ -50,11 +50,10 @@ public class ParkingCardController {
             @RequestParam(name = SIZE, defaultValue = "10") int size,
             @RequestParam(name = PAGE, defaultValue = "0") int page,
             @RequestParam(name = ALL, defaultValue = "false", required = false) boolean isAll,
-            @RequestParam(name = SORT, defaultValue = "DESC", required = false) Sort sort,
             @RequestHeader(name = LANGUAGE, defaultValue = DEFAULT_LANGUAGE) String language
     ) {
         return ResponseGeneral.ofSuccess(messageService.getMessage(GET_ALL_AND_SEARCH_PARKING_CARD, language),
-                parkingCardService.getAllAndSearch(request, size, page, isAll, sort)
+                parkingCardService.getAllAndSearch(request, size, page, isAll)
         );
     }
 }

@@ -55,9 +55,9 @@ public class ParkingServiceImpl implements ParkingCardService {
     }
 
     @Override
-    public PageResponse<ParkingCarResponse> getAllAndSearch(ParkingCardRequest request, int size, int page, boolean isAll, Sort sort) {
+    public PageResponse<ParkingCarResponse> getAllAndSearch(ParkingCardRequest request, int size, int page, boolean isAll) {
         Page<ParkingCarResponse> responses  = isAll ? null :
-                repository.search(PageRequest.of(page, size, sort), request);
+                repository.search(PageRequest.of(page, size), request);
         return PageResponse.of(responses.getContent(), responses.getNumberOfElements());
     }
 
